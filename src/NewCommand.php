@@ -41,6 +41,7 @@ class NewCommand extends Command
             ->setName('new')
             ->setDescription('Create a new Laravel application')
             ->addArgument('name', InputArgument::REQUIRED)
+            ->addOption('release', null, InputOption::VALUE_OPTIONAL, 'Install the specific release')
             ->addOption('dev', null, InputOption::VALUE_NONE, 'Installs the latest "development" release')
             ->addOption('git', null, InputOption::VALUE_NONE, 'Initialize a Git repository')
             ->addOption('branch', null, InputOption::VALUE_REQUIRED, 'The branch that should be created for a new repository', $this->defaultBranch())
@@ -634,6 +635,10 @@ class NewCommand extends Command
     {
         if ($input->getOption('dev')) {
             return 'dev-master';
+        }
+
+        if ($input->getOption('release')) {
+            return $input->getOption('release');
         }
 
         return '';
